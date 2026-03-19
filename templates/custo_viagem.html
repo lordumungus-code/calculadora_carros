@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Custo de Viagem - Calculadora de Combustível{% endblock %}
+
+{% block content %}
+<h1 style="color: #667eea; margin-bottom: 20px;">Custo de Viagem</h1>
+
+<form method="POST" style="max-width: 500px; margin: 0 auto;">
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Distância da viagem (km):</label>
+        <input type="number" step="0.1" name="distancia" required 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Consumo Médio (km/L):</label>
+        <input type="number" step="0.1" name="consumo_medio" required 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preço do Combustível (R$/L):</label>
+        <input type="number" step="0.01" name="preco_combustivel" required 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Total de pedágios (R$):</label>
+        <input type="number" step="0.01" name="pedagios" value="0" 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
+        Calcular
+    </button>
+</form>
+
+{% if resultado %}
+<div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+    <h2 style="color: #667eea; margin-bottom: 15px;">Resultado:</h2>
+    <p><strong>Custo total da viagem:</strong> R$ {{ resultado.custo_total }}</p>
+    <p><strong>Custo com combustível:</strong> R$ {{ resultado.custo_combustivel }}</p>
+    <p><strong>Litros necessários:</strong> {{ resultado.litros }} L</p>
+    <p><strong>Pedágios:</strong> R$ {{ resultado.pedagios }}</p>
+    <p><strong>Distância:</strong> {{ resultado.distancia }} km</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Calculadora de Combustível{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h1 style="color: #667eea; margin-bottom: 20px;">Calculadora de Combustível</h1>
+    <p style="font-size: 1.2rem; margin-bottom: 40px;">
+        Calcule e compare custos com combustível de forma fácil e rápida!
+    </p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <a href="/custo-por-km-carro" style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h2>Custo por KM</h2>
+                <p>Calcule quanto você gasta por quilômetro rodado</p>
+            </div>
+        </a>
+        
+        <a href="/gasto-mensal-combustivel" style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h2>Gasto Mensal</h2>
+                <p>Calcule seu gasto mensal com combustível</p>
+            </div>
+        </a>
+        
+        <a href="/etanol-ou-gasolina-calculadora" style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h2>Etanol vs Gasolina</h2>
+                <p>Descubra qual compensa mais abastecer</p>
+            </div>
+        </a>
+        
+        <a href="/custo-viagem-carro" style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
+                <h2>Custo de Viagem</h2>
+                <p>Calcule o custo total de uma viagem</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

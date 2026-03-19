@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Contato - Calculadora de Combustível{% endblock %}
+
+{% block content %}
+<h1 style="color: #667eea; margin-bottom: 20px;">Entre em Contato</h1>
+
+<form method="POST" style="max-width: 500px; margin: 0 auto;">
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome:</label>
+        <input type="text" name="nome" required 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">E-mail:</label>
+        <input type="email" name="email" required 
+               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Mensagem:</label>
+        <textarea name="mensagem" rows="5" required 
+                  style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+    </div>
+    
+    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
+        Enviar Mensagem
+    </button>
+</form>
+{% endblock %}
