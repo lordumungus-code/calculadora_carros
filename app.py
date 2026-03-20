@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 
 app = Flask(__name__)
 # Pega a chave secreta das variáveis de ambiente (Render) ou usa uma padrão para desenvolvimento
-app.secret_key = os.environ.get('SECRET_KEY', 'chave_para_desenvolvimento_local')
+app.secret_key = os.environ.get('SECRET_KEY 4989665ffe0b342831dd366ae12894d38fc57e59c369dc5c652ef61d5f5744fd', 'chave_para_desenvolvimento_local')
 
 # Simulando banco de dados em memória (não persistente)
 contatos = []
@@ -164,6 +164,11 @@ def contato():
 @app.route('/politica-de-privacidade')
 def politica_privacidade():
     return render_template('politica_privacidade.html')
+
+@app.route('/ads.txt')
+def ads_txt():
+    # Substitua pelo código exato que o Google forneceu
+    return "google.com, pub-2580999860510639, DIRECT, f08c47fec0942fa0"
 
 # Esta parte só executa se rodar diretamente (não no Render)
 if __name__ == '__main__':

@@ -1,42 +1,70 @@
 {% extends "base.html" %}
 
 {% block title %}Início - Calculadora de Combustível{% endblock %}
+{% block icon %}house-door-fill{% endblock %}
+{% block page_title %}Bem-vindo à Calculadora de Combustível{% endblock %}
 
 {% block content %}
-<div style="text-align: center;">
-    <h1 style="color: #667eea; margin-bottom: 20px;">Calculadora de Combustível</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 40px;">
+<div class="text-center mb-5">
+    <p class="lead text-muted">
         Calcule e compare custos com combustível de forma fácil e rápida!
     </p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-speedometer2"></i>
+            </div>
+            <h5>Custo por KM</h5>
+            <p class="text-muted">Calcule quanto você gasta por quilômetro rodado</p>
+            <a href="/custo-por-km-carro" class="btn btn-primary btn-sm">Calcular agora</a>
+        </div>
+    </div>
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-        <a href="/custo-por-km-carro" style="text-decoration: none;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
-                <h2>Custo por KM</h2>
-                <p>Calcule quanto você gasta por quilômetro rodado</p>
+    <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-calendar-check"></i>
             </div>
-        </a>
-        
-        <a href="/gasto-mensal-combustivel" style="text-decoration: none;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
-                <h2>Gasto Mensal</h2>
-                <p>Calcule seu gasto mensal com combustível</p>
+            <h5>Gasto Mensal</h5>
+            <p class="text-muted">Calcule seu gasto mensal com combustível</p>
+            <a href="/gasto-mensal-combustivel" class="btn btn-primary btn-sm">Calcular agora</a>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-question-circle"></i>
             </div>
-        </a>
-        
-        <a href="/etanol-ou-gasolina-calculadora" style="text-decoration: none;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
-                <h2>Etanol vs Gasolina</h2>
-                <p>Descubra qual compensa mais abastecer</p>
+            <h5>Etanol vs Gasolina</h5>
+            <p class="text-muted">Descubra qual compensa mais abastecer</p>
+            <a href="/etanol-ou-gasolina-calculadora" class="btn btn-primary btn-sm">Comparar</a>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="bi bi-geo-alt"></i>
             </div>
-        </a>
-        
-        <a href="/custo-viagem-carro" style="text-decoration: none;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px;">
-                <h2>Custo de Viagem</h2>
-                <p>Calcule o custo total de uma viagem</p>
+            <h5>Custo de Viagem</h5>
+            <p class="text-muted">Calcule o custo total de uma viagem</p>
+            <a href="/custo-viagem-carro" class="btn btn-primary btn-sm">Calcular agora</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light border-0">
+            <div class="card-body text-center">
+                <h5><i class="bi bi-newspaper me-2"></i>Dicas para economizar combustível</h5>
+                <p class="text-muted">Em breve, artigos com dicas exclusivas para você gastar menos!</p>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 {% endblock %}

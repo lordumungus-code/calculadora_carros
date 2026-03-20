@@ -1,34 +1,55 @@
 {% extends "base.html" %}
 
 {% block title %}Custo por KM - Calculadora de Combustível{% endblock %}
+{% block icon %}speedometer2{% endblock %}
+{% block page_title %}Calculadora de Custo por Quilômetro{% endblock %}
 
 {% block content %}
-<h1 style="color: #667eea; margin-bottom: 20px;">Custo por Quilômetro</h1>
-
-<form method="POST" style="max-width: 500px; margin: 0 auto;">
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preço do Combustível (R$/L):</label>
-        <input type="number" step="0.01" name="preco_combustivel" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<form method="POST" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label fw-bold">
+            <i class="bi bi-currency-dollar me-1"></i>Preço do Combustível (R$/L):
+        </label>
+        <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" required placeholder="Ex: 5.89">
     </div>
     
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Consumo Médio (km/L):</label>
-        <input type="number" step="0.1" name="consumo_medio" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    <div class="col-md-6">
+        <label class="form-label fw-bold">
+            <i class="bi bi-droplet me-1"></i>Consumo Médio (km/L):
+        </label>
+        <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" required placeholder="Ex: 12.5">
     </div>
     
-    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
-        Calcular
-    </button>
+    <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-calculator me-2"></i>Calcular Custo por KM
+        </button>
+    </div>
 </form>
 
 {% if resultado %}
-<div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
-    <h2 style="color: #667eea; margin-bottom: 15px;">Resultado:</h2>
-    <p><strong>Custo por KM:</strong> R$ {{ resultado.custo_km }}</p>
-    <p><strong>Preço do combustível:</strong> R$ {{ resultado.preco }}/L</p>
-    <p><strong>Consumo médio:</strong> {{ resultado.consumo }} km/L</p>
+<div class="result-card">
+    <h5 class="text-primary mb-3"><i class="bi bi-check-circle-fill me-2"></i>Resultado</h5>
+    <div class="row text-center">
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="bg-white p-3 rounded">
+                <small class="text-muted">Custo por KM</small>
+                <h3 class="text-primary mb-0">R$ {{ resultado.custo_km }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="bg-white p-3 rounded">
+                <small class="text-muted">Preço do combustível</small>
+                <h3 class="text-dark mb-0">R$ {{ resultado.preco }}/L</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-white p-3 rounded">
+                <small class="text-muted">Consumo médio</small>
+                <h3 class="text-dark mb-0">{{ resultado.consumo }} km/L</h3>
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

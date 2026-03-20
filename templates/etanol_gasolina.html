@@ -1,34 +1,76 @@
 {% extends "base.html" %}
 
 {% block title %}Etanol vs Gasolina - Calculadora de Combustível{% endblock %}
+{% block icon %}question-circle{% endblock %}
+{% block page_title %}Comparação: Etanol ou Gasolina?{% endblock %}
 
 {% block content %}
-<h1 style="color: #667eea; margin-bottom: 20px;">Etanol ou Gasolina?</h1>
-
-<form method="POST" style="max-width: 500px; margin: 0 auto;">
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preço do Etanol (R$/L):</label>
-        <input type="number" step="0.01" name="preco_etanol" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<form method="POST" class="row g-4">
+    <div class="col-md-6">
+        <label class="form-label">
+            <i class="bi bi-droplet me-2" style="color: #667eea;"></i>
+            Preço do Etanol (R$/L)
+        </label>
+        <input type="number" step="0.01" name="preco_etanol" class="form-control form-control-lg" 
+               required placeholder="Ex: 4.59" value="{{ request.form.preco_etanol if request.form.preco_etanol }}">
     </div>
     
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preço da Gasolina (R$/L):</label>
-        <input type="number" step="0.01" name="preco_gasolina" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    <div class="col-md-6">
+        <label class="form-label">
+            <i class="bi bi-fuel-pump me-2" style="color: #667eea;"></i>
+            Preço da Gasolina (R$/L)
+        </label>
+        <input type="number" step="0.01" name="preco_gasolina" class="form-control form-control-lg" 
+               required placeholder="Ex: 5.89" value="{{ request.form.preco_gasolina if request.form.preco_gasolina }}">
     </div>
     
-    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
-        Comparar
-    </button>
+    <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg px-5">
+            <i class="bi bi-arrow-left-right me-2"></i>Comparar Preços
+        </button>
+    </div>
 </form>
 
 {% if resultado %}
-<div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
-    <h2 style="color: #667eea; margin-bottom: 15px;">Resultado:</h2>
-    <p><strong>Relação Etanol/Gasolina:</strong> {{ resultado.relacao }}%</p>
-    <p><strong>Recomendação:</strong> Abasteça com <strong>{{ resultado.recomendacao|upper }}</strong> ({{ resultado.economia }})</p>
-    <p style="font-size: 0.9rem; color: #666;">* Considerando que o etanol vale a pena até 70% do preço da gasolina</p>
+<div class="result-card">
+    <h5 class="mb-4" style="color: #667eea;">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        Resultado da Comparação
+    </h5>
+    
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="stat-box">
+                <div class="stat-label">Relação Etanol/Gasolina</div>
+                <div class="result-number">{{ resultado.relacao }}%</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="stat-box">
+                <div class="stat-label">Recomendação</div>
+                <div class="stat-value text-uppercase" style="color: {% if resultado.recomendacao == 'etanol' %}#28a745{% else %}#dc3545{% endif %};">
+                    {{ resultado.recomendacao }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <label class="form-label fw-bold">Comparação visual:</label>
+        <div class="progress">
+            <div class="progress-bar {% if resultado.relacao <= 70 %}bg-success{% else %}bg-danger{% endif %}" 
+                 style="width: {{ resultado.relacao }}%;">
+                {{ resultado.relacao }}%
+            </div>
+        </div>
+        <small class="text-muted">* Limite recomendado: 70%</small>
+    </div>
+    
+    <div class="alert {% if resultado.recomendacao == 'etanol' %}alert-success{% else %}alert-danger{% endif %} mt-4 mb-0">
+        <i class="bi bi-{% if resultado.recomendacao == 'etanol' %}check-circle{% else %}x-circle{% endif %}-fill me-2"></i>
+        <strong>Recomendação:</strong> Abasteça com <strong>{{ resultado.recomendacao|upper }}</strong> 
+        ({{ resultado.economia }})!
+    </div>
 </div>
 {% endif %}
 {% endblock %}

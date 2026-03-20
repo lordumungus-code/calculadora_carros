@@ -1,40 +1,78 @@
 {% extends "base.html" %}
 
 {% block title %}Gasto Mensal - Calculadora de Combustível{% endblock %}
+{% block icon %}calendar-check{% endblock %}
+{% block page_title %}Calculadora de Gasto Mensal{% endblock %}
 
 {% block content %}
-<h1 style="color: #667eea; margin-bottom: 20px;">Gasto Mensal com Combustível</h1>
-
-<form method="POST" style="max-width: 500px; margin: 0 auto;">
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Quilômetros rodados por mês:</label>
-        <input type="number" step="0.1" name="km_mensal" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+<form method="POST" class="row g-4">
+    <div class="col-md-4">
+        <label class="form-label">
+            <i class="bi bi-speedometer2 me-2" style="color: #667eea;"></i>
+            KM por mês
+        </label>
+        <input type="number" step="0.1" name="km_mensal" class="form-control form-control-lg" 
+               required placeholder="Ex: 1000" value="{{ request.form.km_mensal if request.form.km_mensal }}">
     </div>
     
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Consumo Médio (km/L):</label>
-        <input type="number" step="0.1" name="consumo_medio" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    <div class="col-md-4">
+        <label class="form-label">
+            <i class="bi bi-droplet me-2" style="color: #667eea;"></i>
+            Consumo Médio (km/L)
+        </label>
+        <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" 
+               required placeholder="Ex: 12.5" value="{{ request.form.consumo_medio if request.form.consumo_medio }}">
     </div>
     
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Preço do Combustível (R$/L):</label>
-        <input type="number" step="0.01" name="preco_combustivel" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+    <div class="col-md-4">
+        <label class="form-label">
+            <i class="bi bi-currency-dollar me-2" style="color: #667eea;"></i>
+            Preço do Combustível (R$/L)
+        </label>
+        <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" 
+               required placeholder="Ex: 5.89" value="{{ request.form.preco_combustivel if request.form.preco_combustivel }}">
     </div>
     
-    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">
-        Calcular
-    </button>
+    <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg px-5">
+            <i class="bi bi-calculator me-2"></i>Calcular Gasto Mensal
+        </button>
+    </div>
 </form>
 
 {% if resultado %}
-<div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
-    <h2 style="color: #667eea; margin-bottom: 15px;">Resultado:</h2>
-    <p><strong>Gasto total mensal:</strong> R$ {{ resultado.gasto_total }}</p>
-    <p><strong>Litros necessários:</strong> {{ resultado.litros }} L</p>
-    <p><strong>Quilometragem mensal:</strong> {{ resultado.km_mensal }} km</p>
+<div class="result-card">
+    <h5 class="mb-4" style="color: #667eea;">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        Resultado do Cálculo
+    </h5>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="stat-box">
+                <div class="stat-label">Gasto total mensal</div>
+                <div class="result-number">R$ {{ resultado.gasto_total }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <div class="stat-label">Litros necessários</div>
+                <div class="stat-value">{{ resultado.litros }} L</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <div class="stat-label">KM mensal</div>
+                <div class="stat-value">{{ resultado.km_mensal }} km</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="alert alert-warning mt-4 mb-0">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <strong>Média mensal:</strong> Você percorre <strong>{{ resultado.km_mensal }} km</strong> por mês, 
+        gastando aproximadamente <strong>R$ {{ resultado.gasto_total }}</strong> em combustível.
+    </div>
 </div>
 {% endif %}
 {% endblock %}

@@ -4,137 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Calculadora de Combustível{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts para fonte mais bonita -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #667eea !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #555 !important;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        .nav-link.active {
+            color: #667eea !important;
+            font-weight: 600;
+        }
+        .main-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 10px 30px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+        }
+        .result-card {
+            background: #f8f9fa;
+            border-radius: 10px;
             padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #667eea;
         }
-
-        header {
+        .footer {
             background: white;
+            border-radius: 10px;
             padding: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        nav ul li a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        nav ul li a:hover {
-            background: #f0f0f0;
-        }
-
-        main {
+        .feature-card {
             background: white;
-            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        .flash-messages {
-            margin-bottom: 20px;
-        }
-
-        .flash-message {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .flash-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .flash-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        footer {
+            padding: 20px;
             text-align: center;
-            color: white;
-            padding: 1rem;
+            transition: transform 0.3s;
+            height: 100%;
         }
-
-        footer a {
-            color: white;
-            text-decoration: none;
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
-
-        footer a:hover {
-            text-decoration: underline;
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .flash-message {
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="container">
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/">Início</a></li>
-                    <li><a href="/custo-por-km-carro">Custo por KM</a></li>
-                    <li><a href="/gasto-mensal-combustivel">Gasto Mensal</a></li>
-                    <li><a href="/etanol-ou-gasolina-calculadora">Etanol vs Gasolina</a></li>
-                    <li><a href="/custo-viagem-carro">Custo de Viagem</a></li>
-                    <li><a href="/sobre">Sobre</a></li>
-                    <li><a href="/contato">Contato</a></li>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-fuel-pump-fill me-2"></i>
+                Calculadora de Combustível
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
+                            <i class="bi bi-house-door me-1"></i>Início
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-calculator me-1"></i>Calculadoras
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/custo-por-km-carro">
+                                <i class="bi bi-speedometer2 me-2"></i>Custo por KM
+                            </a></li>
+                            <li><a class="dropdown-item" href="/gasto-mensal-combustivel">
+                                <i class="bi bi-calendar-check me-2"></i>Gasto Mensal
+                            </a></li>
+                            <li><a class="dropdown-item" href="/etanol-ou-gasolina-calculadora">
+                                <i class="bi bi-question-circle me-2"></i>Etanol vs Gasolina
+                            </a></li>
+                            <li><a class="dropdown-item" href="/custo-viagem-carro">
+                                <i class="bi bi-geo-alt me-2"></i>Custo de Viagem
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/sobre' %}active{% endif %}" href="/sobre">
+                            <i class="bi bi-info-circle me-1"></i>Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/contato' %}active{% endif %}" href="/contato">
+                            <i class="bi bi-envelope me-1"></i>Contato
+                        </a>
+                    </li>
                 </ul>
-            </nav>
-        </header>
+            </div>
+        </div>
+    </nav>
 
-        <main>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for category, message in messages %}
-                            <div class="flash-message flash-{{ category }}">{{ message }}</div>
-                        {% endfor %}
+    <!-- Conteúdo principal -->
+    <main class="container my-5">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show flash-message" role="alert">
+                        <i class="bi bi-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' }} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                {% endif %}
-            {% endwith %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-            {% block content %}{% endblock %}
-        </main>
+        <!-- Card principal onde vai o conteúdo de cada página -->
+        <div class="card main-card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="bi bi-{% block icon %}calculator{% endblock %} me-2"></i>{% block page_title %}Calculadora{% endblock %}</h4>
+            </div>
+            <div class="card-body">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
 
-        <footer>
-            <p>&copy; 2024 Calculadora de Combustível. Todos os direitos reservados.</p>
-            <p><a href="/politica-de-privacidade">Política de Privacidade</a></p>
-        </footer>
-    </div>
+    <!-- Footer -->
+    <footer class="container">
+        <div class="footer text-center">
+            <p class="mb-2">&copy; 2026 Calculadora de Combustível. Todos os direitos reservados.</p>
+            <a href="/politica-de-privacidade" class="text-decoration-none text-muted">
+                <i class="bi bi-shield-check me-1"></i>Política de Privacidade
+            </a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
