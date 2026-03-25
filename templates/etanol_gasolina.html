@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}Etanol vs Gasolina - Calculadora de Combustível{% endblock %}
+{% block title %}Etanol ou Gasolina? | Descubra qual combustível compensa mais{% endblock %}
 {% block icon %}question-circle{% endblock %}
-{% block page_title %}Comparação: Etanol ou Gasolina?{% endblock %}
+{% block page_title %}Comparador: Etanol ou Gasolina?{% endblock %}
 
 {% block content %}
+<!-- SEÇÃO DE CONTEÚDO -->
+<div class="content-section mb-5">
+    <p class="lead">Qual combustível vale mais a pena no posto? Descubra agora com nossa calculadora baseada na regra dos 70%.</p>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Como funciona a regra dos 70%?</h2>
+    <p>O etanol tem um poder calorífico menor que a gasolina, ou seja, rende menos por litro. Por isso, para compensar financeiramente, o preço do etanol precisa ser <strong>até 70% do valor da gasolina</strong>.</p>
+    
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-calculator-fill me-2"></i>
+        <strong>Fórmula:</strong> Preço do Etanol ÷ Preço da Gasolina = Relação<br>
+        Se o resultado for <strong>≤ 0,70</strong> → Abasteça com <strong>ETANOL</strong><br>
+        Se for <strong>> 0,70</strong> → Abasteça com <strong>GASOLINA</strong>
+    </div>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Por que essa diferença?</h2>
+    <p>A gasolina possui maior densidade energética, proporcionando mais autonomia. O etanol, por ser derivado da cana-de-açúcar, tem um rendimento cerca de 30% menor. Portanto, mesmo que o preço do etanol seja mais baixo, nem sempre vale a pena.</p>
+</div>
+
+<!-- FORMULÁRIO -->
+<h2 class="h4 mb-3">Compare os preços do posto</h2>
 <form method="POST" class="row g-4">
     <div class="col-md-6">
         <label class="form-label">
@@ -13,6 +33,7 @@
         </label>
         <input type="number" step="0.01" name="preco_etanol" class="form-control form-control-lg" 
                required placeholder="Ex: 4.59" value="{{ request.form.preco_etanol if request.form.preco_etanol }}">
+        <small class="text-muted">Preço do etanol comum no posto</small>
     </div>
     
     <div class="col-md-6">
@@ -22,6 +43,7 @@
         </label>
         <input type="number" step="0.01" name="preco_gasolina" class="form-control form-control-lg" 
                required placeholder="Ex: 5.89" value="{{ request.form.preco_gasolina if request.form.preco_gasolina }}">
+        <small class="text-muted">Preço da gasolina comum no posto</small>
     </div>
     
     <div class="col-12 text-center mt-4">
@@ -31,24 +53,26 @@
     </div>
 </form>
 
+<!-- RESULTADO -->
 {% if resultado %}
 <div class="result-card">
-    <h5 class="mb-4" style="color: #667eea;">
+    <h3 class="h5 mb-4" style="color: #667eea;">
         <i class="bi bi-check-circle-fill me-2"></i>
         Resultado da Comparação
-    </h5>
+    </h3>
     
     <div class="row g-4">
         <div class="col-md-6">
             <div class="stat-box">
                 <div class="stat-label">Relação Etanol/Gasolina</div>
                 <div class="result-number">{{ resultado.relacao }}%</div>
+                <small class="text-muted">Limite recomendado: 70%</small>
             </div>
         </div>
         <div class="col-md-6">
             <div class="stat-box">
                 <div class="stat-label">Recomendação</div>
-                <div class="stat-value text-uppercase" style="color: {% if resultado.recomendacao == 'etanol' %}#28a745{% else %}#dc3545{% endif %};">
+                <div class="stat-value text-uppercase" style="color: {% if resultado.recomendacao == 'etanol' %}#28a745{% else %}#dc3545{% endif %}; font-size: 1.8rem;">
                     {{ resultado.recomendacao }}
                 </div>
             </div>
@@ -57,20 +81,43 @@
     
     <div class="mt-4">
         <label class="form-label fw-bold">Comparação visual:</label>
-        <div class="progress">
+        <div class="progress" style="height: 25px;">
             <div class="progress-bar {% if resultado.relacao <= 70 %}bg-success{% else %}bg-danger{% endif %}" 
                  style="width: {{ resultado.relacao }}%;">
                 {{ resultado.relacao }}%
             </div>
         </div>
-        <small class="text-muted">* Limite recomendado: 70%</small>
+        <div class="d-flex justify-content-between mt-1">
+            <small>0%</small>
+            <small>70% (limite)</small>
+            <small>100%</small>
+        </div>
     </div>
     
     <div class="alert {% if resultado.recomendacao == 'etanol' %}alert-success{% else %}alert-danger{% endif %} mt-4 mb-0">
         <i class="bi bi-{% if resultado.recomendacao == 'etanol' %}check-circle{% else %}x-circle{% endif %}-fill me-2"></i>
-        <strong>Recomendação:</strong> Abasteça com <strong>{{ resultado.recomendacao|upper }}</strong> 
-        ({{ resultado.economia }})!
+        <strong>Recomendação final:</strong> Abasteça com <strong>{{ resultado.recomendacao|upper }}</strong>! 
+        {% if resultado.recomendacao == 'etanol' %}
+        Com a relação de {{ resultado.relacao }}%, você terá o melhor custo-benefício.
+        {% else %}
+        A gasolina compensa mais, pois o etanol está acima de 70% do valor da gasolina.
+        {% endif %}
     </div>
 </div>
 {% endif %}
+
+<!-- DICAS EXTRAS -->
+<div class="mt-5 p-4 bg-light rounded">
+    <h3 class="h5 mb-3" style="color: #667eea;">
+        <i class="bi bi-question-circle-fill me-2"></i>Dúvidas comuns
+    </h3>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>❓ Por que o etanol rende menos?</strong><br>O etanol tem cerca de 30% menos energia por litro que a gasolina.</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>❓ A regra dos 70% é precisa?</strong><br>Sim, é uma referência confiável adotada por especialistas do setor automotivo.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

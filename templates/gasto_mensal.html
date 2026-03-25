@@ -1,10 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Gasto Mensal - Calculadora de Combustível{% endblock %}
+{% block title %}Gasto Mensal | Calcule quanto você gasta por mês com combustível{% endblock %}
 {% block icon %}calendar-check{% endblock %}
-{% block page_title %}Calculadora de Gasto Mensal{% endblock %}
+{% block page_title %}Calculadora de Gasto Mensal com Combustível{% endblock %}
 
 {% block content %}
+<!-- SEÇÃO DE CONTEÚDO -->
+<div class="content-section mb-5">
+    <p class="lead">Saber quanto você gasta por mês com combustível ajuda a planejar seu orçamento e identificar oportunidades de economia.</p>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Por que calcular o gasto mensal?</h2>
+    <p>O combustível é uma das maiores despesas para quem usa o carro diariamente. Com nossa calculadora, você descobre exatamente quanto dinheiro sai do seu bolso todo mês e pode comparar com outras opções de transporte.</p>
+    
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-graph-up me-2"></i>
+        <strong>Dado relevante:</strong> Um motorista que roda 1.000 km por mês com um carro que faz 10 km/L gasta cerca de 100 litros de combustível. Com a gasolina a R$ 5,89, isso representa <strong>R$ 589,00 mensais</strong>!
+    </div>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Fatores que afetam seu gasto mensal</h2>
+    <ul>
+        <li><strong>Distância percorrida:</strong> Trabalho, escola, lazer - tudo soma</li>
+        <li><strong>Eficiência do veículo:</strong> Carros mais novos costumam ser mais econômicos</li>
+        <li><strong>Preço do combustível:</strong> Varia de posto para posto e ao longo do mês</li>
+        <li><strong>Tipo de percurso:</strong> Estrada é mais econômica que cidade</li>
+    </ul>
+</div>
+
+<!-- FORMULÁRIO -->
+<h2 class="h4 mb-3">Calcule seu gasto mensal</h2>
 <form method="POST" class="row g-4">
     <div class="col-md-4">
         <label class="form-label">
@@ -13,6 +36,7 @@
         </label>
         <input type="number" step="0.1" name="km_mensal" class="form-control form-control-lg" 
                required placeholder="Ex: 1000" value="{{ request.form.km_mensal if request.form.km_mensal }}">
+        <small class="text-muted">Calcule: trabalho + estudos + lazer</small>
     </div>
     
     <div class="col-md-4">
@@ -22,6 +46,7 @@
         </label>
         <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" 
                required placeholder="Ex: 12.5" value="{{ request.form.consumo_medio if request.form.consumo_medio }}">
+        <small class="text-muted">Veja no manual ou no painel do carro</small>
     </div>
     
     <div class="col-md-4">
@@ -31,6 +56,7 @@
         </label>
         <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" 
                required placeholder="Ex: 5.89" value="{{ request.form.preco_combustivel if request.form.preco_combustivel }}">
+        <small class="text-muted">Preço médio da sua região</small>
     </div>
     
     <div class="col-12 text-center mt-4">
@@ -40,12 +66,13 @@
     </div>
 </form>
 
+<!-- RESULTADO -->
 {% if resultado %}
 <div class="result-card">
-    <h5 class="mb-4" style="color: #667eea;">
+    <h3 class="h5 mb-4" style="color: #667eea;">
         <i class="bi bi-check-circle-fill me-2"></i>
-        Resultado do Cálculo
-    </h5>
+        Seu Gasto Mensal
+    </h3>
     
     <div class="row g-4">
         <div class="col-md-4">
@@ -70,9 +97,26 @@
     
     <div class="alert alert-warning mt-4 mb-0">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <strong>Média mensal:</strong> Você percorre <strong>{{ resultado.km_mensal }} km</strong> por mês, 
-        gastando aproximadamente <strong>R$ {{ resultado.gasto_total }}</strong> em combustível.
+        <strong>Economia potencial:</strong> Se você reduzir o consumo em 10% (dirigindo com mais cuidado), economizaria cerca de <strong>R$ {{ "%.2f"|format(resultado.gasto_total * 0.1) }}</strong> por mês, ou <strong>R$ {{ "%.2f"|format(resultado.gasto_total * 1.2) }}</strong> por ano!
     </div>
 </div>
 {% endif %}
+
+<!-- DICAS DE ECONOMIA -->
+<div class="mt-5 p-4 bg-light rounded">
+    <h3 class="h5 mb-3" style="color: #667eea;">
+        <i class="bi bi-graph-down me-2"></i>Como reduzir seu gasto mensal
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <p><strong>🚗 Carona solidária</strong><br>Divida o trajeto com colegas de trabalho</p>
+        </div>
+        <div class="col-md-4">
+            <p><strong>🚲 Transporte alternativo</strong><br>Use bicicleta ou transporte público quando possível</p>
+        </div>
+        <div class="col-md-4">
+            <p><strong>⛽ Postos mais baratos</strong><br>Use apps como "Menor Preço" para encontrar o combustível mais barato</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

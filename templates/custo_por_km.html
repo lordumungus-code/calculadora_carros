@@ -1,55 +1,122 @@
 {% extends "base.html" %}
 
-{% block title %}Custo por KM - Calculadora de Combustível{% endblock %}
+{% block title %}Custo por KM | Calcule quanto seu carro gasta por quilômetro{% endblock %}
 {% block icon %}speedometer2{% endblock %}
 {% block page_title %}Calculadora de Custo por Quilômetro{% endblock %}
 
 {% block content %}
-<form method="POST" class="row g-3">
+<!-- SEÇÃO DE CONTEÚDO -->
+<div class="content-section mb-5">
+    <p class="lead">Saber quanto você gasta por quilômetro rodado é essencial para controlar seu orçamento e planejar suas finanças.</p>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Como calcular o custo por km?</h2>
+    <p>O cálculo é simples: divida o <strong>preço do litro do combustível</strong> pelo <strong>consumo médio do seu veículo</strong> (km/L). O resultado é exatamente quanto você gasta a cada quilômetro percorrido.</p>
+    
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-calculator-fill me-2"></i>
+        <strong>Exemplo prático:</strong> Se a gasolina custa R$ 5,89 e seu carro faz 12 km/L, o custo por km é de <strong>R$ 0,49</strong>. Em uma viagem de 100 km, você gastaria R$ 49,00.
+    </div>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">O que influencia no custo por km?</h2>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <ul>
+                <li><strong>Tipo de combustível:</strong> Etanol, gasolina ou diesel têm rendimentos diferentes</li>
+                <li><strong>Estado do veículo:</strong> Manutenção em dia reduz o consumo</li>
+                <li><strong>Estilo de direção:</strong> Acelerações suaves economizam combustível</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul>
+                <li><strong>Condições da via:</strong> Estradas e trânsito afetam o rendimento</li>
+                <li><strong>Carga transportada:</strong> Quanto mais peso, maior o consumo</li>
+                <li><strong>Uso de ar-condicionado:</strong> Pode aumentar o consumo em até 10%</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- FORMULÁRIO -->
+<h2 class="h4 mb-3">Calcule agora o custo por km do seu carro</h2>
+<form method="POST" class="row g-4">
     <div class="col-md-6">
-        <label class="form-label fw-bold">
-            <i class="bi bi-currency-dollar me-1"></i>Preço do Combustível (R$/L):
+        <label class="form-label">
+            <i class="bi bi-currency-dollar me-2" style="color: #667eea;"></i>
+            Preço do Combustível (R$/L)
         </label>
-        <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" required placeholder="Ex: 5.89">
+        <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" 
+               required placeholder="Ex: 5.89" value="{{ request.form.preco_combustivel if request.form.preco_combustivel }}">
+        <small class="text-muted">Consulte o preço no posto mais próximo</small>
     </div>
     
     <div class="col-md-6">
-        <label class="form-label fw-bold">
-            <i class="bi bi-droplet me-1"></i>Consumo Médio (km/L):
+        <label class="form-label">
+            <i class="bi bi-droplet me-2" style="color: #667eea;"></i>
+            Consumo Médio (km/L)
         </label>
-        <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" required placeholder="Ex: 12.5">
+        <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" 
+               required placeholder="Ex: 12.5" value="{{ request.form.consumo_medio if request.form.consumo_medio }}">
+        <small class="text-muted">Verifique no manual do seu veículo ou pelo computador de bordo</small>
     </div>
     
     <div class="col-12 text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg">
+        <button type="submit" class="btn btn-primary btn-lg px-5">
             <i class="bi bi-calculator me-2"></i>Calcular Custo por KM
         </button>
     </div>
 </form>
 
+<!-- RESULTADO -->
 {% if resultado %}
 <div class="result-card">
-    <h5 class="text-primary mb-3"><i class="bi bi-check-circle-fill me-2"></i>Resultado</h5>
-    <div class="row text-center">
-        <div class="col-md-4 mb-3 mb-md-0">
-            <div class="bg-white p-3 rounded">
-                <small class="text-muted">Custo por KM</small>
-                <h3 class="text-primary mb-0">R$ {{ resultado.custo_km }}</h3>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3 mb-md-0">
-            <div class="bg-white p-3 rounded">
-                <small class="text-muted">Preço do combustível</small>
-                <h3 class="text-dark mb-0">R$ {{ resultado.preco }}/L</h3>
+    <h3 class="h5 mb-4" style="color: #667eea;">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        Resultado do Cálculo
+    </h3>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="stat-box">
+                <div class="stat-label">Custo por KM</div>
+                <div class="result-number">R$ {{ resultado.custo_km }}</div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="bg-white p-3 rounded">
-                <small class="text-muted">Consumo médio</small>
-                <h3 class="text-dark mb-0">{{ resultado.consumo }} km/L</h3>
+            <div class="stat-box">
+                <div class="stat-label">Preço do combustível</div>
+                <div class="stat-value">R$ {{ resultado.preco }}/L</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <div class="stat-label">Consumo médio</div>
+                <div class="stat-value">{{ resultado.consumo }} km/L</div>
             </div>
         </div>
     </div>
+    
+    <div class="alert alert-success mt-4 mb-0">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <strong>Dica baseada no seu resultado:</strong> Com esse consumo, você gasta <strong>R$ {{ resultado.custo_km }}</strong> por quilômetro. Em 100 km, seriam <strong>R$ {{ "%.2f"|format(resultado.custo_km * 100) }}</strong>.
+    </div>
 </div>
 {% endif %}
+
+<!-- DICAS ADICIONAIS -->
+<div class="mt-5 p-4 bg-light rounded">
+    <h3 class="h5 mb-3" style="color: #667eea;">
+        <i class="bi bi-star-fill me-2"></i>Como reduzir seu custo por km
+    </h3>
+    <div class="row">
+        <div class="col-md-4">
+            <p><strong>📊 Calibre os pneus</strong><br>Pneus descalibrados aumentam o consumo em até 20%</p>
+        </div>
+        <div class="col-md-4">
+            <p><strong>⚡ Dirija com suavidade</strong><br>Frenagens e acelerações bruscas gastam mais combustível</p>
+        </div>
+        <div class="col-md-4">
+            <p><strong>🔧 Faça revisões periódicas</strong><br>Velas, filtros e óleo em dia fazem diferença</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

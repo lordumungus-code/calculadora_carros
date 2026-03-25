@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}Custo de Viagem - Calculadora de Combustível{% endblock %}
+{% block title %}Custo de Viagem | Planeje sua viagem sem surpresas no bolso{% endblock %}
 {% block icon %}geo-alt{% endblock %}
 {% block page_title %}Calculadora de Custo de Viagem{% endblock %}
 
 {% block content %}
+<!-- SEÇÃO DE CONTEÚDO -->
+<div class="content-section mb-5">
+    <p class="lead">Planeje sua próxima viagem com precisão! Calcule todos os custos antes de pegar a estrada.</p>
+    
+    <h2 class="h5 mb-3" style="color: #667eea;">Por que calcular o custo da viagem?</h2>
+    <p>Viagens de carro podem ter custos ocultos. Além do combustível, pedágios e imprevistos precisam entrar no planejamento. Nossa calculadora ajuda você a:</p>
+    <ul>
+        <li>Definir o orçamento da viagem com antecedência</li>
+        <li>Comparar custos entre diferentes rotas</li>
+        <li>Decidir se compensa mais ir de carro ou outros meios de transporte</li>
+    </ul>
+    
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <strong>Exemplo:</strong> Uma viagem de 500 km com um carro que faz 12 km/L (gasolina a R$ 5,89) + R$ 80 de pedágios custará cerca de <strong>R$ 325,00</strong>.
+    </div>
+</div>
+
+<!-- FORMULÁRIO -->
+<h2 class="h4 mb-3">Calcule sua viagem</h2>
 <form method="POST" class="row g-4">
     <div class="col-md-6">
         <label class="form-label">
@@ -13,6 +33,7 @@
         </label>
         <input type="number" step="0.1" name="distancia" class="form-control form-control-lg" 
                required placeholder="Ex: 300" value="{{ request.form.distancia if request.form.distancia }}">
+        <small class="text-muted">Use Google Maps para medir a distância</small>
     </div>
     
     <div class="col-md-6">
@@ -22,6 +43,7 @@
         </label>
         <input type="number" step="0.1" name="consumo_medio" class="form-control form-control-lg" 
                required placeholder="Ex: 12.5" value="{{ request.form.consumo_medio if request.form.consumo_medio }}">
+        <small class="text-muted">Na estrada, o consumo costuma ser melhor</small>
     </div>
     
     <div class="col-md-6">
@@ -31,6 +53,7 @@
         </label>
         <input type="number" step="0.01" name="preco_combustivel" class="form-control form-control-lg" 
                required placeholder="Ex: 5.89" value="{{ request.form.preco_combustivel if request.form.preco_combustivel }}">
+        <small class="text-muted">Consulte os preços no trecho da viagem</small>
     </div>
     
     <div class="col-md-6">
@@ -40,6 +63,7 @@
         </label>
         <input type="number" step="0.01" name="pedagios" class="form-control form-control-lg" 
                placeholder="Ex: 50" value="{{ request.form.pedagios if request.form.pedagios else '0' }}">
+        <small class="text-muted">Some todos os pedágios do trajeto</small>
     </div>
     
     <div class="col-12 text-center mt-4">
@@ -49,12 +73,13 @@
     </div>
 </form>
 
+<!-- RESULTADO -->
 {% if resultado %}
 <div class="result-card">
-    <h5 class="mb-4" style="color: #667eea;">
+    <h3 class="h5 mb-4" style="color: #667eea;">
         <i class="bi bi-check-circle-fill me-2"></i>
         Resultado da Viagem
-    </h5>
+    </h3>
     
     <div class="row g-4">
         <div class="col-md-3">
@@ -86,8 +111,26 @@
     <div class="alert alert-info mt-4 mb-0">
         <i class="bi bi-info-circle-fill me-2"></i>
         <strong>Resumo:</strong> Para uma viagem de <strong>{{ resultado.distancia }} km</strong>, 
-        você gastará <strong>R$ {{ resultado.custo_total }}</strong> no total.
+        você gastará <strong>R$ {{ resultado.custo_total }}</strong> no total. 
+        Isso representa <strong>R$ {{ "%.2f"|format(resultado.custo_total / resultado.distancia * 100) }}</strong> por 100 km rodados.
     </div>
 </div>
 {% endif %}
+
+<!-- DICAS PARA ECONOMIZAR NA VIAGEM -->
+<div class="mt-5 p-4 bg-light rounded">
+    <h3 class="h5 mb-3" style="color: #667eea;">
+        <i class="bi bi-lightbulb me-2"></i>Dicas para economizar na viagem
+    </h3>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>🕐 Evite horários de pico</strong><br>Viajar em horários com menos trânsito reduz paradas e consumo</p>
+            <p><strong>📱 Use apps de pedágio</strong><br>Aplicativos como "Sem Parar" podem oferecer descontos</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>⛽ Abasteça antes da estrada</strong><br>Combustível em postos de rodovia costuma ser mais caro</p>
+            <p><strong>🔧 Verifique o carro antes</strong><br>Pneus calibrados e manutenção em dia reduzem o consumo</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
